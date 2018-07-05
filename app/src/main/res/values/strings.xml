@@ -19,6 +19,7 @@
     <string name="pref_file">pe.edu.upc.proyectotsys</string>
     <string name="pref_login_status">pe.edu.upc.proyectotsys.preferences_login_status</string>
     <string name="pref_user_name">pe.edu.upc.proyectotsys.preferences_user_name</string>
+    <string name="error">error!</string>
 
 
 </resources>

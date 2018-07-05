@@ -1,14 +1,31 @@
 package pe.edu.upc.proyectotsys.viewcontrollers.fragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pe.edu.upc.proyectotsys.R;
+import pe.edu.upc.proyectotsys.models.Advisor;
+import pe.edu.upc.proyectotsys.models.Contract;
+import pe.edu.upc.proyectotsys.viewcontrollers.Interface.AdvisorInterface;
+import pe.edu.upc.proyectotsys.viewcontrollers.Interface.ContractInterface;
+import pe.edu.upc.proyectotsys.viewcontrollers.activities.MainActivity;
+import pe.edu.upc.proyectotsys.viewcontrollers.activities.MenuActivity;
+import pe.edu.upc.proyectotsys.viewcontrollers.adapters.ContractAdapter;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 ///**
 // * A simple {@link Fragment} subclass.
@@ -29,6 +46,8 @@ public class HistorialFragment extends Fragment {
 //    private String mParam2;
 //
 //    private OnFragmentInteractionListener mListener;
+
+
 
     public HistorialFragment() {
         // Required empty public constructor
@@ -61,11 +80,76 @@ public class HistorialFragment extends Fragment {
 //        }
 //    }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
+                             final Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_historial, container, false);
+        final TextView resultadotextView;
+        final View view = inflater.inflate(R.layout.fragment_historial, container, false);
+        resultadotextView = (TextView)view.findViewById(R.id.texttest);
+
+        final RecyclerView contractRecyclerView;
+        contractRecyclerView = (RecyclerView) view.findViewById(R.id.contratos);
+
+        final RecyclerView.LayoutManager contractLayoutManager;
+        contractLayoutManager = new LinearLayoutManager(getContext());
+
+
+
+        final List<Contract> contratos = new ArrayList<Contract>();
+        //contratos = List<Contract>;
+
+        contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+
+
+
+
+
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://t-sys-kennygonzales.c9users.io").build();
+
+        ContractInterface servicio = restAdapter.create(ContractInterface.class);
+
+        servicio.getContracts(new Callback<List<Contract>>() {
+            @Override
+            public void success(List<Contract> contracts, Response response) {
+
+                List<Contract> contratosF = new ArrayList<Contract>();
+
+                for(int indice = 0;indice<contracts.size();indice++)
+                {
+                    contratosF.add(new Contract(contracts.get(indice).getCode_grade(),
+                                                contracts.get(indice).getCode_knowledge(),
+                                                contracts.get(indice).getDni_student(),
+                                                contracts.get(indice).getDate_advisory()
+                                                )
+                                );
+                    resultadotextView.setText(contracts.get(indice).toString());
+                }
+
+                ContractAdapter contractAdapter;
+                contractAdapter = new ContractAdapter();
+                contractAdapter.setContract(contratosF);
+
+                contractRecyclerView.setLayoutManager(contractLayoutManager);
+                contractRecyclerView.setAdapter(contractAdapter);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                resultadotextView.setText(error.getMessage());
+
+            }
+        }
+        );
+
+
+        return view;
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event

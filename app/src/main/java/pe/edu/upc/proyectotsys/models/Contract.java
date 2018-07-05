@@ -1,6 +1,10 @@
 package pe.edu.upc.proyectotsys.models;
 
+import java.util.Date;
+
 public class Contract {
+
+    private int code_contract;
     private int code_available_time;
     private int code_knowledge;
     private String dni_student;
@@ -11,8 +15,8 @@ public class Contract {
     private int method_payment;
     private int score_contract;
 
-    public Contract(int code_available_time, int code_knowledge, String dni_student, int code_grade, String date_registry,
-                    String date_advisory, int state_contract, int method_payment, int score_contract) {
+    public Contract(int code_contract, int code_available_time, int code_knowledge, String dni_student, int code_grade, String date_registry, String date_advisory, int state_contract, int method_payment, int score_contract) {
+        this.code_contract = code_contract;
         this.code_available_time = code_available_time;
         this.code_knowledge = code_knowledge;
         this.dni_student = dni_student;
@@ -24,28 +28,25 @@ public class Contract {
         this.score_contract = score_contract;
     }
 
-    public Contract() {
+    public Contract(int code_grade, int code_knowledge, String dni_student, String date_advisory) {
+        this.code_contract = 0;
         this.code_available_time = 0;
-        this.code_knowledge = 0;
-        this.dni_student = "";
-        this.code_grade = 0;
+        this.code_knowledge = code_knowledge;
+        this.dni_student = dni_student;
+        this.code_grade = code_grade;
         this.date_registry = "";
-        this.date_advisory = "";
+        this.date_advisory = date_advisory;
         this.state_contract = 0;
         this.method_payment = 0;
         this.score_contract = 0;
     }
 
-    public Contract(int code_available_time, int code_knowledge, String dni_student) {
-        this.code_available_time = code_available_time;
-        this.code_knowledge = code_knowledge;
-        this.dni_student = dni_student;
-        this.code_grade = 0;
-        this.date_registry = "";
-        this.date_advisory = "";
-        this.state_contract = 0;
-        this.method_payment = 0;
-        this.score_contract = 0;
+    public int getCode_contract() {
+        return code_contract;
+    }
+
+    public void setCode_contract(int code_contract) {
+        this.code_contract = code_contract;
     }
 
     public int getCode_available_time() {
@@ -118,5 +119,30 @@ public class Contract {
 
     public void setScore_contract(int score_contract) {
         this.score_contract = score_contract;
+    }
+
+    public String getCodeGradeS(){
+        return "" + code_grade;
+    }
+
+    public String getCodeKnowledgeS(){
+        return "" + code_knowledge;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Contract{" +
+                "code_contract=" + code_contract +
+                ", code_available_time=" + code_available_time +
+                ", code_knowledge=" + code_knowledge +
+                ", dni_student='" + dni_student + '\'' +
+                ", code_grade=" + code_grade +
+                ", date_registry='" + date_registry + '\'' +
+                ", date_advisory='" + date_advisory + '\'' +
+                ", state_contract=" + state_contract +
+                ", method_payment=" + method_payment +
+                ", score_contract=" + score_contract +
+                '}';
     }
 }
