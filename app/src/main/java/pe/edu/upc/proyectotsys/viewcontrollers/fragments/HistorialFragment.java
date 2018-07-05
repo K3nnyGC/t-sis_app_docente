@@ -100,11 +100,17 @@ public class HistorialFragment extends Fragment {
 
 
         final List<Contract> contratos = new ArrayList<Contract>();
-        //contratos = List<Contract>;
+        //Valores de prueba
 
-        contratos.add(new Contract(0,0,"43545543","12-23-2019"));
-        contratos.add(new Contract(0,0,"43545543","12-23-2019"));
-        contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
+        //contratos.add(new Contract(0,0,"43545543","12-23-2019"));
 
 
 
@@ -128,7 +134,7 @@ public class HistorialFragment extends Fragment {
                                                 contracts.get(indice).getDate_advisory()
                                                 )
                                 );
-                    resultadotextView.setText(contracts.get(indice).toString());
+                    //resultadotextView.setText(contracts.get(indice).toString());
                 }
 
                 ContractAdapter contractAdapter;

@@ -5,35 +5,84 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    app:cardCornerRadius="4dp"
+    app:cardBackgroundColor="@color/colorPrimary_Light"
+    app:cardElevation="5dp"
     android:id="@+id/contractCard">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dni estudiante"
-            android:id="@+id/dni_estudiante"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dni estudiante"
-            android:id="@+id/grado"/>
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="dni estudiante"
-        android:id="@+id/tema"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="dni estudiante"
-            android:id="@+id/fecha"/>
+        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DNI Estudiante"
+                android:textColor="@color/colorText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grado"
+                android:textColor="@color/colorText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tema"
+                android:textColor="@color/colorText"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de serv"
+                android:textColor="@color/colorText"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dni_estudiante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dni estudiante"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:id="@+id/tema"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dni estudiante"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:id="@+id/fecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dni estudiante"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:id="@+id/grado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="dni estudiante"
+                android:textColor="@color/colorText"/>
+        </LinearLayout>
 
     </LinearLayout>
 
