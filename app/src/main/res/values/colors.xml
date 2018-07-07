@@ -23,6 +23,11 @@
     <color name="colorText">#212121</color>
     <color name="colorTextLink">#006ECC</color>
     <color name="colorTextError">#e3000f</color>
+
+    <color name="graylight">#fafafa</color>
+    <color name="starblue">#09c6df</color>
+    <color name="endblue">#0bcce6</color>
+
 </resources>
 
 

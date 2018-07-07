@@ -1,12 +1,20 @@
 package pe.edu.upc.proyectotsys.viewcontrollers.activities;
 
 import android.app.PendingIntent;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +23,11 @@ import android.widget.ImageView;
 import android.content.Intent;
 import android.view.View;
 import android.net.Uri;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Map;
+
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
@@ -43,6 +55,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextInputLayout impdni, impphone, impname, implastname, impemail, imppassword, imppassword2, impadress;
     private EditText txtdni, txtphone, txtname, txtlastname, txtemail, txtpassword, txtpassword2, txtadress;
     private String txtlat, txtlon;
+    Location location;
+    LocationManager locationManager;
+    LocationListener locationListener;
+    AlertDialog alert = null;
+    private SharedPreferences pref_maps;
+    private String strImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +70,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        pref_maps = this.getSharedPreferences("Preferences_Maps", Context.MODE_PRIVATE);
+
         pictureImageView = (ImageView) findViewById(R.id.pictureImageView);
         GoMapImageButton = (ImageButton) findViewById(R.id.GoMapImageButton);
         button_registrar = (Button) findViewById(R.id.button_registrar);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         GoMapImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View viewIn) {
                 try {
-                MostrarAlertaGPS();
-//                    Intent myRegister = new Intent(MainActivity.this, RegisterActivity.class);
-//                    startActivity(myRegister);
+                    if (!GPSHabilitado()){
+                        MostrarAlertaGPS();
+                    }else{
+                        Intent i = new Intent(getApplicationContext(), MapsActivity.class);
+                        startActivityForResult(i, 99);
+                    }
                 } catch (Exception except) {
                     Toast.makeText(RegisterActivity.this, except.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -92,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
     private void registerUser(){
         RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://t-sys-kennygonzales.c9users.io").build();
         AdvisorInterface servicio = restAdapter.create(AdvisorInterface.class);
@@ -110,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 0,
                 0.0,
                 "",
-                "");
+                ConvertImageToString());
 
         servicio.RegisterAdvisor(advisor, new Callback<Advisor>() {
             @Override
@@ -118,7 +144,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 new AlertDialog.Builder(RegisterActivity.this)
                         .setTitle("Alerta: Registro Asesor")
                         .setMessage("El asesor fue registrado correctamente.")
-                        .setNegativeButton("OK", null)
+                        .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
                         .show();
             }
             @Override
@@ -133,7 +164,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //                }else if (error.getMessage().toString() == "retrofit.RetrofitError: 500 Internal Server Error" ){
 //                    Toast.makeText(RegisterActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
 //                }
-
             }
         });
     }
@@ -179,11 +209,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     galleryIntent.setType("image/*");
                     startActivityForResult(galleryIntent, ACTIVITY_SELECT_IMAGE);
                 }
-
             });
             _photoDialog = builder.create();
         }
         return _photoDialog;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -204,12 +238,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == ACTIVITY_SELECT_IMAGE && resultCode == RESULT_OK) {
             mImageUri = data.getData();
             getImage(mImageUri);
-        } else if (requestCode == ACTIVITY_SELECT_FROM_CAMERA
-                && resultCode == RESULT_OK) {
+        } else if (requestCode == ACTIVITY_SELECT_FROM_CAMERA && resultCode == RESULT_OK) {
             getImage(mImageUri);
+        } else if (requestCode == 99 && resultCode == RESULT_OK) {
+            txtlat = data.getStringExtra("latitud");
+            txtlon = data.getStringExtra("longitud");
+            txtadress.setText(data.getStringExtra("direction"));
+            Toast.makeText(RegisterActivity.this, txtlat, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -239,14 +278,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .show();
     }
 
-//    private void ValidarGPSHabilitado(){
-//        try{
-//            int gpsSignal = Settings.Secure.getInt(getActivity().getContentResolver(), Settings.Secure.LOCATION_MODE);
-//
-//
-//        }
-//
-//    }
+    private boolean GPSHabilitado(){
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public String ConvertImageToString(){
+        pictureImageView.buildDrawingCache();
+        Bitmap bitmap = pictureImageView.getDrawingCache();
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+        byte[] image = stream.toByteArray();
+        String img_str = Base64.encodeToString(image, 0);
+        return img_str;
+    }
 
     public boolean ValidarCamposRegistroUsuario(){
         txtdni = (EditText) findViewById(R.id.dniTextView);
@@ -257,8 +306,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         txtpassword = (EditText) findViewById(R.id.passwordTextView);
         txtadress = (EditText) findViewById(R.id.directionTextView);
         txtpassword2 = (EditText) findViewById(R.id.password2TextView);
-        txtlat = "16.155211";
-        txtlon = "12.155211";
+//        txtlat = "16.155211";
+//        txtlon = "12.155211";
 
         impdni = (TextInputLayout) findViewById(R.id.impDni);
         impphone = (TextInputLayout) findViewById(R.id.impPhone);
@@ -301,9 +350,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    public void CargarCoordenadas(){
+        txtlat = pref_maps.getString("latitud", "0");
+        txtlon = pref_maps.getString("longitud", "0");
+    }
+
     @Override
     public void onClick(View viewIn) {
         if (ValidarCamposRegistroUsuario() == true) {
+            CargarCoordenadas();
             registerUser();
         }
     }
