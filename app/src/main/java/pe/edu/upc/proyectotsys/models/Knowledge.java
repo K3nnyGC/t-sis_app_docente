@@ -1,73 +1,60 @@
 package pe.edu.upc.proyectotsys.models;
 
+/**
+ * Created by Kenny on 10/07/2018.
+ */
 public class Knowledge {
-    private String dni;
-    private int code_career;
-    private String theme;
-    private String description;
-    private double price;
+    private int code_knowledge;
+    private Advisor dni; //Docente
+    private Category id_theme; //Categoria elegida
+    private Double price;
 
-    public Knowledge(String dni, int code_career, String theme, String description, double price) {
+    public Knowledge(int code_knowledge, Advisor dni, Category id_theme, Double price) {
+        this.code_knowledge = code_knowledge;
         this.dni = dni;
-        this.code_career = code_career;
-        this.theme = theme;
-        this.description = description;
+        this.id_theme = id_theme;
         this.price = price;
     }
 
-    public Knowledge(String dni, int code_career) {
-        this.dni = dni;
-        this.code_career = code_career;
-        this.theme = "";
-        this.description = "";
-        this.price = 0;
+    public int getCode_knowledge() {
+        return code_knowledge;
     }
 
-    public Knowledge() {
-        this.dni = "";
-        this.code_career = 0;
-        this.theme = "";
-        this.description = "";
-        this.price = 0;
+    public void setCode_knowledge(int code_knowledge) {
+        this.code_knowledge = code_knowledge;
     }
 
-    public String getDni() {
+    public Advisor getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
+    public void setDni(Advisor dni) {
         this.dni = dni;
     }
 
-    public int getCode_career() {
-        return code_career;
+    public Category getId_theme() {
+        return id_theme;
     }
 
-    public void setCode_career(int code_career) {
-        this.code_career = code_career;
+    public void setId_theme(Category id_theme) {
+        this.id_theme = id_theme;
     }
 
-    public String getTheme() {
-        return theme;
-    }
-
-    public void setTheme(String theme) {
-        this.theme = theme;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Knowledge{" +
+                "code_knowledge=" + code_knowledge +
+                ", dni=" + dni.toString() +
+                ", id_theme=" + id_theme.toString() +
+                ", price=" + price +
+                '}';
     }
 }

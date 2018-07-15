@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProyectoTSyS</string>
+    <string name="app_name">T-SyS Asesor</string>
     <string name="title_activity_register">Registrar</string>
 
     <string name="photo_source">Seleccione Imagen</string>
@@ -8,8 +8,9 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_home">HOME</string>
     <string name="title_temas">TEMAS</string>
+    <string name="title_careers">CARRERAS</string>
     <string name="title_disponibilidad">DISPONIBILIDAD</string>
-    <string name="title_historial">HISTORIAL</string>
+    <string name="title_historial">SOLICITUDES</string>
     <string name="title_perfil">CUENTA</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -20,6 +21,8 @@
     <string name="pref_login_status">pe.edu.upc.proyectotsys.preferences_login_status</string>
     <string name="pref_user_name">pe.edu.upc.proyectotsys.preferences_user_name</string>
     <string name="error">error!</string>
-
+    <string name="title_activity_career">Registrar Carrera</string>
+    <string name="title_activity_update">Editar Perfil</string>
+    <string name="title_activity_knowledge">Registrar Conocimientos</string>
 
 </resources>

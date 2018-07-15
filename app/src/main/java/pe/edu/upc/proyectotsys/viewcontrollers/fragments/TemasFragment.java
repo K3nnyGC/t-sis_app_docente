@@ -1,103 +1,113 @@
 package pe.edu.upc.proyectotsys.viewcontrollers.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pe.edu.upc.proyectotsys.R;
+import pe.edu.upc.proyectotsys.models.Contract;
+import pe.edu.upc.proyectotsys.models.Grade;
+import pe.edu.upc.proyectotsys.models.Knowledge;
+import pe.edu.upc.proyectotsys.models.advisor_detail;
+import pe.edu.upc.proyectotsys.viewcontrollers.Interface.AdvisorDetailInterface;
+import pe.edu.upc.proyectotsys.viewcontrollers.Interface.ContractInterface;
+import pe.edu.upc.proyectotsys.viewcontrollers.Interface.GradeInterface;
+import pe.edu.upc.proyectotsys.viewcontrollers.Interface.KnowledgeInterface;
+import pe.edu.upc.proyectotsys.viewcontrollers.activities.CareerActivity;
+import pe.edu.upc.proyectotsys.viewcontrollers.activities.KnowledgeActivity;
+import pe.edu.upc.proyectotsys.viewcontrollers.adapters.CareerAdapter;
+import pe.edu.upc.proyectotsys.viewcontrollers.adapters.ContractAdapter;
+import pe.edu.upc.proyectotsys.viewcontrollers.adapters.KnowledgeAdapter;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class TemasFragment extends Fragment {
-//    // TODO: Rename parameter arguments, choose names that match
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//
-//    private OnFragmentInteractionListener mListener;
 
     public TemasFragment() {
         // Required empty public constructor
     }
 
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment TemasFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static TemasFragment newInstance(String param1, String param2) {
-//        TemasFragment fragment = new TemasFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
+    private TextView txtText;
+    private Spinner spnGrade;
+    List<Knowledge> detailK = new ArrayList<Knowledge>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_temas, container, false);
+        View view = inflater.inflate(R.layout.fragment_temas, container, false);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), KnowledgeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        final RecyclerView temasRecyclerView;
+        temasRecyclerView = (RecyclerView) view.findViewById(R.id.temas);
+
+        final RecyclerView.LayoutManager temasLayoutManager;
+        temasLayoutManager = new LinearLayoutManager(getContext());
+
+        final List<Knowledge> knowledge = new ArrayList<Knowledge>();
+
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint("http://t-sys-kennygonzales.c9users.io").build();
+
+        KnowledgeInterface servicio = restAdapter.create(KnowledgeInterface.class);
+
+        servicio.getAllKnowledge(new Callback<List<Knowledge>>() {
+                                   @Override
+                                   public void success(List<Knowledge> knowledges, Response response) {
+                                       for (int indice = 0; indice < knowledges.size(); indice++) {
+                                           detailK.add(new Knowledge(
+                                                   knowledges.get(indice).getCode_knowledge(),
+                                                   knowledges.get(indice).getDni(),
+                                                   knowledges.get(indice).getId_theme(),
+                                                   knowledges.get(indice).getPrice()
+                                                   )
+                                           );
+                                       }
+
+                                       KnowledgeAdapter knowledgeAdapter;
+                                       knowledgeAdapter = new KnowledgeAdapter();
+                                       knowledgeAdapter.setDetail(detailK);
+
+                                       temasRecyclerView.setLayoutManager(temasLayoutManager);
+                                       temasRecyclerView.setAdapter(knowledgeAdapter);
+
+                                   }
+
+                                   @Override
+                                   public void failure(RetrofitError error) {
+                                       //
+                                   }
+                               }
+        );
+
+
+        return view;
     }
 
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-//
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
 }

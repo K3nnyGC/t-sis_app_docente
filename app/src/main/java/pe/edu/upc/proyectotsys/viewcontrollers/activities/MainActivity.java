@@ -3,10 +3,8 @@ package pe.edu.upc.proyectotsys.viewcontrollers.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,7 +13,6 @@ import android.widget.Toast;
 import pe.edu.upc.proyectotsys.R;
 import pe.edu.upc.proyectotsys.models.Advisor;
 import pe.edu.upc.proyectotsys.viewcontrollers.Interface.AdvisorInterface;
-import pe.edu.upc.proyectotsys.viewcontrollers.clases.PrefConfig;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -77,15 +74,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void GuardarDatosSession(Advisor oAdvisor) {
         SharedPreferences.Editor edit = pref_Session.edit();
-        edit.putString("dni", oAdvisor.getDni_advisor());
+        edit.putString("dni", oAdvisor.getDni());
         edit.putString("name", oAdvisor.getName());
         edit.putString("lastName", oAdvisor.getLastname());
         edit.putString("email", oAdvisor.getEmail());
         edit.putString("direction", oAdvisor.getAddress());
-        edit.putString("password", oAdvisor.getPasword());
+        edit.putString("password", oAdvisor.getPassword());
         edit.putString("phone", oAdvisor.getPhone());
-        edit.putString("getCard", oAdvisor.getCard());
-        edit.putString("getCreditCard", oAdvisor.getCredit_card());
         edit.putString("token", oAdvisor.getToken());
         edit.putInt("status", oAdvisor.getStatus_advisor());
         edit.putString("picture", oAdvisor.getPicture());
@@ -122,17 +117,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             @Override
             public void failure(RetrofitError error) {
-                textErrorTextView.setText("El email o el password ingresads son incorrectos.");
+                textErrorTextView.setText("El email o el password ingresados son incorrectos.");
             }
         });
     }
 
     private boolean ValidarCamposLogin(){
         if (correoTextView.getText().toString().isEmpty()){
-            textErrorTextView.setText("El email o el password ingresads son incorrectos.");
+            textErrorTextView.setText("El email o el password ingresados son incorrectos.");
             return false;
         }else if (passwordTextView.getText().toString().isEmpty()){
-            textErrorTextView.setText("El email o el password ingresads son incorrectos.");
+            textErrorTextView.setText("El email o el password ingresados son incorrectos.");
             return false;
         }else{
             return true;

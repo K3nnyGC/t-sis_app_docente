@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import pe.edu.upc.proyectotsys.R;
+import pe.edu.upc.proyectotsys.viewcontrollers.fragments.CareerFragment;
 import pe.edu.upc.proyectotsys.viewcontrollers.fragments.DispoFragment;
 import pe.edu.upc.proyectotsys.viewcontrollers.fragments.HistorialFragment;
 import pe.edu.upc.proyectotsys.viewcontrollers.fragments.HomeFragment;
@@ -38,7 +39,7 @@ public class MenuActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigateTo(navigation.getMenu().findItem(R.id.navigation_home));
+        navigateTo(navigation.getMenu().findItem(R.id.navigation_perfil));
 
         pref_Session = getSharedPreferences("SessionUser", Context.MODE_PRIVATE);
     }
@@ -46,8 +47,10 @@ public class MenuActivity extends AppCompatActivity {
 
     private Fragment getFragmentFor(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.navigation_home:
-                return new HomeFragment();
+//            case R.id.navigation_home:
+//                return new HomeFragment();
+            case R.id.navigation_careers:
+                return new CareerFragment();
             case R.id.navigation_temas:
                 return new TemasFragment();
             case R.id.navigation_disponibilidad:

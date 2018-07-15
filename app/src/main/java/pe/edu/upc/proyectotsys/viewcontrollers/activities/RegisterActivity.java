@@ -1,10 +1,9 @@
 package pe.edu.upc.proyectotsys.viewcontrollers.activities;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,13 +25,14 @@ import android.net.Uri;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.Map;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.android.gms.common.internal.Objects;
 
 import pe.edu.upc.proyectotsys.R;
 import pe.edu.upc.proyectotsys.models.Advisor;
@@ -61,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     AlertDialog alert = null;
     private SharedPreferences pref_maps;
     private String strImage;
+    private static int FACTOR = 5; //5%
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,14 +130,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 txtadress.getText().toString(),
                 txtpassword.getText().toString(),
                 txtphone.getText().toString(),
-                "",
-                "",
                 Double.parseDouble(txtlat.toString()),
                 Double.parseDouble(txtlon.toString()),
                 0,
                 0.0,
                 "",
-                ConvertImageToString());
+                strImage);
 
         servicio.RegisterAdvisor(advisor, new Callback<Advisor>() {
             @Override
@@ -159,11 +158,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         .setMessage("El correo o dni que ha ingresado ya se encuentra registrado, por favor valide los campos.")
                         .setNegativeButton("OK", null)
                         .show();
-//                if (error.getMessage().toString() == "retrofit.RetrofitError: 409 Conflict"){
-//                    Toast.makeText(RegisterActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                }else if (error.getMessage().toString() == "retrofit.RetrofitError: 500 Internal Server Error" ){
-//                    Toast.makeText(RegisterActivity.this, error.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                }
             }
         });
     }
@@ -256,9 +250,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         pictureImageView.setImageBitmap(bitmap);
     }
 
+    public static String convert(Bitmap bitmap)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+    }
+
     public void getImage(Uri uri) {
         Bitmap bounds = photoUtils.getImage(uri);
         if (bounds != null) {
+            strImage = convert(bounds);
             setImageBitmap(bounds);
         }
     }
@@ -293,8 +295,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
         byte[] image = stream.toByteArray();
-        String img_str = Base64.encodeToString(image, 0);
-        return img_str;
+        String strIma = Base64.encodeToString(image, 0);
+        return strIma;
     }
 
     public boolean ValidarCamposRegistroUsuario(){
@@ -363,3 +365,4 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 }
+

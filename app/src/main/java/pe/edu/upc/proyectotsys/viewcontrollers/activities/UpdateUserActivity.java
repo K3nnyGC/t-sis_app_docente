@@ -4,25 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.View;
 
 import pe.edu.upc.proyectotsys.R;
-import android.app.PendingIntent;
+
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Patterns;
 import android.widget.Button;
@@ -30,12 +24,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.content.Intent;
-import android.view.View;
 import android.net.Uri;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.Map;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -43,14 +34,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
-import pe.edu.upc.proyectotsys.R;
-import pe.edu.upc.proyectotsys.models.Advisor;
-import pe.edu.upc.proyectotsys.viewcontrollers.Interface.AdvisorInterface;
 import pe.edu.upc.proyectotsys.viewcontrollers.clases.PhotoUtils;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class UpdateUserActivity extends AppCompatActivity implements View.OnClickListener {
     private AlertDialog _photoDialog;
@@ -88,11 +72,11 @@ public class UpdateUserActivity extends AppCompatActivity implements View.OnClic
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                                                 @Override
-                                                 public void onClick(View v) {
-                                                     UpdateUserActivity.this.onBackPressed();
-                                                 }
-                                             });
+            @Override
+            public void onClick(View v) {
+                UpdateUserActivity.this.onBackPressed();
+            }
+        });
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -100,9 +84,9 @@ public class UpdateUserActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onClick(View viewIn) {
                 try {
-                    if (!GPSHabilitado()){
+                    if (!GPSHabilitado()) {
                         MostrarAlertaGPS();
-                    }else{
+                    } else {
                         Intent i = new Intent(getApplicationContext(), MapsActivity.class);
                         startActivityForResult(i, 99);
                     }
@@ -296,7 +280,6 @@ public class UpdateUserActivity extends AppCompatActivity implements View.OnClic
 
         CargarImage(strImage);
 
-
         txtdni.setEnabled(false);
         txtdni.setFocusable(false);
         txtdni.setTextColor(Color.GRAY);
@@ -324,6 +307,4 @@ public class UpdateUserActivity extends AppCompatActivity implements View.OnClic
             UpdateUser();
         }
     }
-
-
 }

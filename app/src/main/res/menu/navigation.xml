@@ -2,10 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home"
-        />
+        android:id="@+id/navigation_perfil"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="@string/title_perfil" />
+    <!--<item-->
+        <!--android:id="@+id/navigation_home"-->
+        <!--android:icon="@drawable/ic_home_black_24dp"-->
+        <!--android:title="@string/title_home"-->
+        <!--/>-->
+    <item
+        android:id="@+id/navigation_careers"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="@string/title_careers" />
     <item
         android:id="@+id/navigation_temas"
         android:icon="@drawable/ic_carnet_black_24"
@@ -18,8 +26,5 @@
         android:id="@+id/navigation_historial"
         android:icon="@drawable/ic_find_in_page_black_24dp"
         android:title="@string/title_historial" />
-    <item
-        android:id="@+id/navigation_perfil"
-        android:icon="@drawable/ic_account_circle_black_24dp"
-        android:title="@string/title_perfil" />
+
 </menu>

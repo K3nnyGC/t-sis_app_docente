@@ -1,52 +1,42 @@
 package pe.edu.upc.proyectotsys.models;
 
-import java.util.Date;
-
 public class Available {
-    private int code;
-    private String dni;
+    private int code_available_time;
+    private Advisor dni;
     private String date;
     private int hour;
-    private int status;
+    private int status_available;
 
-    public Available(int code, String dni, String date, int hour, int status) {
-        this.code = code;
+    public Available(int code_available_time, Advisor dni, String date, int hour, int status_available) {
+        this.code_available_time = code_available_time;
         this.dni = dni;
         this.date = date;
         this.hour = hour;
-        this.status = status;
+        this.status_available = status_available;
     }
 
-    public Available(int code, String dni) {
-        this.code = code;
+    public Available(int code, Advisor dni) {
+        this.code_available_time = code_available_time;
         this.dni = dni;
         this.date = "";
         this.hour = 0;
-        this.status = 0;
-    }
-
-    public Available() {
-        this.code = 0;
-        this.dni = "";
-        this.date = "";
-        this.hour = 0;
-        this.status = 0;
+        this.status_available = 0;
     }
 
     public int getCode() {
-        return code;
+        return code_available_time;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        this.code_available_time = code;
     }
 
-    public String getDni() {
+    public Advisor getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setDni(Advisor dni) {
+        this.dni= dni;
     }
 
     public String getDate() {
@@ -66,10 +56,10 @@ public class Available {
     }
 
     public int getStatus() {
-        return status;
+        return status_available;
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.status_available = status;
     }
 }

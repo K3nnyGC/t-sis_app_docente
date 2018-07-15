@@ -1,6 +1,5 @@
 package pe.edu.upc.proyectotsys.viewcontrollers.adapters;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import pe.edu.upc.proyectotsys.R;
 import pe.edu.upc.proyectotsys.models.Advisor;
-import android.os.Bundle;
 
 public class AdvisorAdapter extends RecyclerView.Adapter<AdvisorAdapter.ViewHolder> {
     private List<Advisor> advisor;
@@ -33,7 +31,7 @@ public class AdvisorAdapter extends RecyclerView.Adapter<AdvisorAdapter.ViewHold
                 .load(R.drawable.fondoprincipal2);
 
         holder.nameTextView.setText(advisor.get(position).getName() + " " + advisor.get(position).getLastname());
-        holder.dniTextView.setText("DNI: " + advisor.get(position).getDni_advisor());
+        holder.dniTextView.setText("DNI: " + advisor.get(position).getDni());
         holder.directionTextView.setText("Dirección: " + advisor.get(position).getAddress());
 
 //        holder.advisorCardView.setOnClickListener(new View.OnClickListener() {

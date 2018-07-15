@@ -48,6 +48,12 @@
                 android:text="Fecha de serv"
                 android:textColor="@color/colorText"
                 android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado Contrato"
+                android:textColor="@color/colorText"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,6 +87,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="dni estudiante"
+                android:textColor="@color/colorText"/>
+
+            <TextView
+                android:id="@+id/estado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado Contrato"
                 android:textColor="@color/colorText"/>
         </LinearLayout>
 

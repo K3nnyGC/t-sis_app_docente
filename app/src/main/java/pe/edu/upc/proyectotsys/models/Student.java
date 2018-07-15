@@ -1,60 +1,44 @@
 package pe.edu.upc.proyectotsys.models;
 
+/**
+ * Created by Kenny on 10/07/2018.
+ */
 public class Student {
     private String dni;
-    private String email;
-    private String password;
     private String name;
     private String lastname;
+    private String email;
     private String address;
+    private String password;
     private String phone;
-    private String card;
-    private int status;
     private String token;
     private String picture;
+    private int status_student;
 
-    public Student(String dni, String email, String password, String name, String lastname, String address, String phone,
-                   String card, int status, String token, String picture) {
-        this.dni = dni;
+    public Student(String email, String password) {
+        this.dni = "";
+        this.name = "";
+        this.lastname = "";
         this.email = email;
+        this.address = "";
         this.password = password;
+        this.phone = "";
+        this.token = "";
+        this.picture = "";
+        this.status_student = 0;
+    }
+
+    public Student(String dni, String name, String lastname, String email, String address, String password, String phone, String token, String picture, int status_student) {
+        this.dni = dni;
         this.name = name;
         this.lastname = lastname;
+        this.email = email;
         this.address = address;
+        this.password = password;
         this.phone = phone;
-        this.card = card;
-        this.status = status;
         this.token = token;
         this.picture = picture;
-    }
-
-    public Student(String dni) {
-        this.dni = dni;
-        this.email = "";
-        this.password = "";
-        this.name = "";
-        this.lastname = "";
-        this.address = "";
-        this.phone = "";
-        this.card = "";
-        this.status = 0;
-        this.token = "";
-        this.picture = "";
-    }
-
-    public Student() {
-        this.dni = "";
-        this.email = "";
-        this.password = "";
-        this.name = "";
-        this.lastname = "";
-        this.address = "";
-        this.phone = "";
-        this.card = "";
-        this.status = 0;
-        this.token = "";
-        this.picture = "";
-
+        this.status_student = status_student;
     }
 
     public String getDni() {
@@ -63,22 +47,6 @@ public class Student {
 
     public void setDni(String dni) {
         this.dni = dni;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -97,6 +65,14 @@ public class Student {
         this.lastname = lastname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -105,28 +81,20 @@ public class Student {
         this.address = address;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getCard() {
-        return card;
-    }
-
-    public void setCard(String card) {
-        this.card = card;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getToken() {
@@ -143,5 +111,29 @@ public class Student {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public int getStatus_student() {
+        return status_student;
+    }
+
+    public void setStatus_student(int status_student) {
+        this.status_student = status_student;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "dni=" + dni +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
+                ", token='" + token + '\'' +
+                ", picture='" + picture + '\'' +
+                ", status_student=" + status_student +
+                '}';
     }
 }

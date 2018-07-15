@@ -5,18 +5,42 @@
     android:layout_height="match_parent"
     tools:context=".viewcontrollers.fragments.HistorialFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/texttest"
-        android:textColor="@color/colorAccent"/>
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout
+            android:id="@+id/linearLayoutl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/button_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearLayoutl"
+                android:background="#0095ff"
+                android:text="Mis Solicitudes"
+                android:textColor="@color/ColoWhite"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/carreras"
+            android:paddingTop="50dp"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="true"/>
+    </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/contratos"
+        android:paddingTop="50dp"
         android:scrollbars="vertical"
         android:fadeScrollbars="true"/>
-
 </FrameLayout>

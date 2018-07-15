@@ -12,7 +12,10 @@ import retrofit.http.POST;
 
 public interface ContractInterface {
     @Headers("Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==")
-    @GET("/api/contracts")
-    void getContracts(Callback<List<Contract>> callback);
+    @GET("/V2/api/contract/1")
+    void getContracts(Callback<Contract> callback);
 
+    @Headers("Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==")
+    @GET("/V2/api/contracts")
+    void getAllContracts(Callback<List<Contract>> callback);
 }
